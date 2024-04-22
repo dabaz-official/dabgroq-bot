@@ -18,7 +18,11 @@ async function getGroqResponse(query) {
           content: query,
         },
       ],
-      model: "mixtral-8x7b-32768",
+      model: "llama3-70b-8192",
+      temperature: 0.5,
+      max_tokens: 1024,
+      top_p: 1,
+      stop: null,
     });
 
     return completion.choices[0].message.content;
@@ -29,9 +33,6 @@ async function getGroqResponse(query) {
 
 bot.on("message:text", async (ctx) => {
   const response = await getGroqResponse(ctx.message.text);
-
-  console.log('Message from: ', ctx.from.username)
-  console.log('Message: ', ctx.message.text)
 
   ctx.reply(response);
 });
